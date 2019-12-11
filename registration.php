@@ -43,26 +43,72 @@
                     <h1>Registration</h1>
                     <hr class="mb-3">
                     <label for="firstname"><b>First name</b></label>
-                    <input class="form-control" type="text" name="firstname" required>  
+                    <input class="form-control" id="firstname" type="text" name="firstname" required>  
 
                     <label for="lastname"><b>Last name</b></label>
-                    <input class="form-control" type="text" name="lastname" required> 
+                    <input class="form-control" id="lastname" type="text" name="lastname" required> 
 
                     <label for="email"><b>Email Address</b></label>
-                    <input class="form-control" type="email" name="email" required> 
+                    <input class="form-control" id="email" type="email" name="email" required> 
 
                     <label for="phonenumber"><b>Phone Number</b></label>
-                    <input class="form-control" type="text" name="phonenumber" required> 
+                    <input class="form-control" id="phonenumber" type="text" name="phonenumber" required> 
 
                     <label for="password"><b>Password</b></label>
-                    <input class="form-control" type="password" name="password" required>   
+                    <input class="form-control" id="password" type="password" name="password" required>   
                     <hr class="mb-3">
-                    <input class="btn btn-primary" type="submit" value="Sign Up" name="create">
+                    <input class="btn btn-primary" type="submit" id="register" value="Sign Up" name="create">
                 </div> 
             </div>     
         </div>
     </form>
 </div>
-    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script type="text/javascript">
+    $(function() {
+       $('#register').click(function(e){
+
+            var valid = this.form.checkValidity();
+            if(valid) {
+                
+            var firstname = $('#firstname').val;
+            var lastname = $('#lastname').val;
+            var email = $('#email').val;
+            var phonenumber = $('#phonenumber').val;
+            var password = $('#password').val;
+
+                e.preventDefault();
+
+                $.ajax ({
+                    type: 'POST',
+                    url: 'process.php',
+                    data: {firstname: firstname,lastname: lastname,email: email,phonenumber: phonenumber
+                    password: password},
+                    success: function(data) {
+                        Swal.fire(
+                         'title': 'Successful!',
+                         'text': 'Successfully registered!',
+                         'type': 'success'
+                             )
+                    },
+                    error: function(data) {
+                        Swal.fire(
+                         'title': 'Errors!',
+                         'text': 'There was error while registering',
+                         'type': 'error'
+                             )
+                    }        
+                });
+
+               
+            }  else {
+               
+            }
+
+       });
+
+    });
+</script>   
 </body>
 </html>
