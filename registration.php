@@ -14,24 +14,7 @@
 
 <div>
     <?php
-    if(isset($_POST['create'])) {
-        $firstname   = $_POST['firstname'];
-        $lastname    = $_POST['lastname'];
-        $email       = $_POST['email'];
-        $phonenumber = $_POST['phonenumber'];
-        $password    = $_POST['password'];
 
-        $sql = "INSERT INTO users (firstname, lastname, email, phonenumber, password ) VALUES(?,?,?,?,?)";
-        $stmtinsert = $db->prepare($sql);
-        $result = $stmtinsert->execute([$firstname, $lastname, $email, $phonenumber, $password]);
-        if ($result) {
-            echo 'Succesfully saved.';
-        }   else {
-            echo 'There were errors while saving the data.';
-        } 
-         
-
-    } 
     ?>
 </div>
 
@@ -72,32 +55,31 @@
             var valid = this.form.checkValidity();
             if(valid) {
                 
-            var firstname = $('#firstname').val;
-            var lastname = $('#lastname').val;
-            var email = $('#email').val;
-            var phonenumber = $('#phonenumber').val;
-            var password = $('#password').val;
+            var firstname = $('#firstname').val();
+            var lastname = $('#lastname').val();
+            var email = $('#email').val();
+            var phonenumber = $('#phonenumber').val();
+            var password = $('#password').val();
 
                 e.preventDefault();
 
                 $.ajax ({
                     type: 'POST',
                     url: 'process.php',
-                    data: {firstname: firstname,lastname: lastname,email: email,phonenumber: phonenumber
-                    password: password},
+                    data: {firstname: firstname,lastname: lastname,email: email,phonenumber: phonenumber,password: password},
                     success: function(data) {
-                        Swal.fire(
+                        Swal.fire({
                          'title': 'Successful!',
-                         'text': 'Successfully registered!',
+                         'text':   data,
                          'type': 'success'
-                             )
+                        })
                     },
                     error: function(data) {
-                        Swal.fire(
+                        Swal.fire({
                          'title': 'Errors!',
                          'text': 'There was error while registering',
                          'type': 'error'
-                             )
+                        })
                     }        
                 });
 
